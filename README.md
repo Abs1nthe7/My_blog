@@ -1,65 +1,45 @@
-# Momo
+# My Blog
 
-<div align="center">
-    <img src="./doc/images/dark-light.jpg">
-    <p>一个极简的Blog模板，使用 <a href="https://astro.build/">Astro</a> 搭建</p>
-    <small><ins>简体中文</ins></small> <small><a href="./doc/README_en.md">English</a></small> 
-</div>
+基于 [Astro](https://astro.build/) 与 [Momo](https://github.com/Motues/Momo) 模板修改的个人博客项目。
 
-## ✨ 特性
+这个仓库目前主要用于记录：
 
-Momo 取自小红书📕，每个新用户最初的昵称，象征着初始新生。博客的设计理念也来自于此，从简约出发，在复杂功能与简约设计之间达到一种平衡。
+- 算法竞赛与题解
+- 游戏开发学习笔记
+- 日常随笔与阶段性总结
 
-* **极简设计**：页面设计简约，黑白为主色调，蓝色进行点缀
-* **深色模式**：支持手动切换或自动跟随系统
-* **文章搜索功能**：使用 [pagefind](https://pagefind.app/) 实现本地化搜索功能
-* **国际化（i18n）**：支持多语言切换，目前支持简体中文、英文
-* **移动端适配**：组件针对移动端进行优化，拥有和电脑浏览器一样的流畅体验
-* **评论功能**：支持本地部署和 Cloudflare 部署，具体参考 [Backend](https://github.com/Motues/Momo-Backend)
-* **丰富的Markdown语法**：支持 KaTex，Typst，Alert 组件，GitHub 卡片，自定义语法等
-* 其他基本功能：文章分类，目录，RSS订阅，字数统计，阅读时间
+## 文章与页面位置
 
-## 🚀 快速开始
+文章内容：
 
-1. 克隆本项目
-    ```bash
-    git clone https://github.com/Motues/Momo.git
-    cd Momo
-    ```
-2. 运行 `pnpm install` 安装依赖（使用 `npm install -g pnpm` 安装 `pnpm`）
-3. 运行 `pnpm dev` 启动开发服务器
+```text
+src/content/blog
+```
 
-## 🔧 配置
+关于页内容：
 
-参考 [配置指南](./doc/config_zh-cn.md)，详细信息可以访问 [Momo](https://momo.motues.top/intro/config)，阅读对应文章获取详细信息。
+```text
+src/content/spec/about
+```
 
-## 📚 更新
+友链页内容：
 
-参考 [更新指南](./doc/release_zh-cn.md)，介绍如何更新项目，详细信息可以访问 [Momo](https://momo.motues.top/intro/release)。
+```text
+src/content/spec/friends
+```
 
-## 🍃 分支
+站点基础配置：
 
-下面是一些分支，会不定期进行维护，无法保证与 `main` 分支一致
+```text
+src/config.ts
+```
 
-* `memos`：实现 Memos 卡片功能
-* `v6`：将依赖升级到 Astro v6
+首页和多语言文案：
 
-## ⚡ 指令
+```text
+src/i18n/language
+```
 
-以下所有的指令可以在根目录下面执行
+## 说明
 
-| 指令 | 作用 |
-| --- | --- |
-| `pnpm install` | 安装依赖 |
-| `pnpm dev` | 启动本地服务器，运行在 `http://localhost:4321` |
-| `pnpm build` | 构建发布版本到 `./dist` 目录下 |
-| `pnpm preview` | 预览构建后的发布版本 |
-| `pnpm astro ...` | 运行 `astro` 命令，例如 `astro add` |
-| `pnpm newpost <path> <lang>` | 创建新文章，例如 `pnpm newpost docs/test.md zh-cn`，语言可以省略，默认为`zh-cn` |
-
-
-## 📚 参考
-
-* [Astro](https://astro.build/)
-* [Fuwari](https://github.com/saicaca/fuwari)
-* [Tyndall](https://github.com/moyuin-aka/tyndall-public)
+这个项目最初基于 `Momo` 模板进行修改，目前已经按自己的博客方向做了定制。
