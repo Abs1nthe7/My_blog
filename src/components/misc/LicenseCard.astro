@@ -1,0 +1,28 @@
+---
+import { i18n } from "astro:config/client";
+import i18nit from "@i18n/translation";
+import { formatFullDate } from '@/utils/time'
+
+interface Props {
+    title: string;
+    pubDate: string;
+    class?: string;
+}
+
+
+const { title, pubDate } = Astro.props;
+const className = Astro.props.class;
+
+const currentLang = Astro.currentLocale || i18n!.defaultLocale;
+const t = i18nit(currentLang);
+---
+
+<div data-aos="fade-up" class={`relative transition rounded overflow-hidden text-[var(--text-color)] bg-[var(--button-hover-color)] py-5 px-6 ${className}`}>
+    <div class="transition font-bold">
+        {title}
+    </div>
+    <div class="mt-3 text-sm">
+        <div class="transition text-[var(--text-color-70)]">{t("license.publishon")}</div>
+        <div class="transition text-[var(--text-color)] font-bold">{formatFullDate(pubDate, currentLang)}</div>
+    </div>
+</div>
