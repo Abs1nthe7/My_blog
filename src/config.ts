@@ -21,9 +21,9 @@ export const siteConfig: SiteConfig = {
         enable: true // Whether to enable blog navigation in the blog footer
     },
     comments: {
-        enable: false, // Whether to enable comments
-        platform: "default", // Comment platform, set "default" to use Momo-backend, also supports "twikoo"
-        backendUrl: "https://api-momo.motues.top" // Backend URL for comments
+        enable: true, // Whether to enable comments
+        platform: "twikoo", // Comment platform, set "default" to use Momo-backend, also supports "twikoo"
+        backendUrl: "https://comments.ueriy.com" // Twikoo envId / backend URL
     },
     theme: {
         AOS: true, // Whether to enable AOS (Animate On Scroll) for animations
@@ -36,7 +36,7 @@ export const profileConfig: ProfileConfig = {
     avatar: "assets/about-avatar.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
     name: "ueriy",
     description: "写给自己，也写给偶然路过的人。",
-    indexPage: "https://your-domain.com",
+    indexPage: "https://ueriy.com",
     startYear: 2026,
 }
 
@@ -48,9 +48,9 @@ export const licenseConfig: LicenseConfig = {
 
 export const friendLinkConfig: FriendLink[] = [
     {
-        name: 'Abs1nthe7',
-        avatar: 'https://github.com/Abs1nthe7.png',
-        url: 'https://github.com/Abs1nthe7',
-        description: 'GitHub'
+        name: '作品集',
+        avatar: '/favicon/favicon.ico',
+        url: 'https://ueriy.com',
+        description: '个人作品集与博客'
     }
 ]

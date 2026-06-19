@@ -12,10 +12,11 @@ const { envId, postSlug, language } = Astro.props;
 
 <script is:inline define:vars={{ envId, postSlug, language }}>
   function initTwikoo() {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/twikoo@1.7.7/dist/twikoo.min.js';
-    script.async = true;
-    script.onload = () => {
+    const mountTwikoo = () => {
+      const container = document.querySelector('#twikoo-comment');
+      if (!container || !window.twikoo) return;
+
+      container.innerHTML = '';
       window.twikoo.init({
         envId: envId,
         el: '#twikoo-comment',
@@ -23,6 +24,23 @@ const { envId, postSlug, language } = Astro.props;
         lang: language
       });
     };
+
+    if (window.twikoo) {
+      mountTwikoo();
+      return;
+    }
+
+    const existingScript = document.querySelector('script[data-twikoo-script]');
+    if (existingScript) {
+      existingScript.addEventListener('load', mountTwikoo, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/twikoo@1.7.7/dist/twikoo.min.js';
+    script.async = true;
+    script.dataset.twikooScript = 'true';
+    script.onload = mountTwikoo;
     document.head.appendChild(script);
   }
   initTwikoo();
@@ -30,6 +48,27 @@ const { envId, postSlug, language } = Astro.props;
   document.addEventListener('astro:page-load', initTwikoo);
 </script>
 
-<style>
+<style is:global>
+  #twikoo-comment .tk-meta-input .el-input:nth-child(3),
+  #twikoo-comment .tk-meta-input .el-input-group:nth-child(3),
+  #twikoo-comment input[name="link"],
+  #twikoo-comment input[placeholder*="网址"],
+  #twikoo-comment input[placeholder*="Website"],
+  #twikoo-comment input[placeholder*="Site"] {
+    display: none !important;
+  }
 
+  #twikoo-comment .tk-avatar,
+  #twikoo-comment .tk-avatar img,
+  #twikoo-comment img.tk-avatar-img {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 9999px !important;
+    object-fit: cover !important;
+    flex-shrink: 0 !important;
+  }
+
+  #twikoo-comment .tk-submit .tk-avatar {
+    display: block !important;
+  }
 </style>

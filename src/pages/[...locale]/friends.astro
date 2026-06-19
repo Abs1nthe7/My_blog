@@ -1,6 +1,6 @@
 ---
 import MainPageLayout from '@layouts/MainPageLayout.astro'
-import { siteConfig, friendLinkConfig } from '@/config'
+import { siteConfig, profileConfig } from '@/config'
 import Cover from '@components/Cover.astro';
 import Markdown from '@components/misc/Markdown.astro';
 
@@ -24,48 +24,122 @@ if (!friendsPost) {
 const { Content } = await render(friendsPost);
 
 const pageTitle = t("header.friends") + " - " + siteConfig.title;
+
+const portfolioIntro = currentLang === 'en'
+    ? 'This page collects projects, posts, and learning notes that I am working on or want to keep. It is still growing, so I am starting with the main directions and useful entry points.'
+    : '这里会整理我正在做、已经完成或值得留下记录的项目与学习成果。现在还在慢慢补全，先把方向和入口放在这里。';
+
+const portfolioItems = currentLang === 'en' ? [
+    {
+        title: 'Personal Blog',
+        tag: 'Astro / Momo',
+        description: 'A personal site customized with Astro and the Momo template, used to record algorithm practice, game development notes, and occasional essays.',
+        link: '/en/',
+        linkText: 'Visit site'
+    },
+    {
+        title: 'GitHub',
+        tag: 'Code / Open Source',
+        description: 'My GitHub profile. I will gradually organize practice projects, blog source code, and public code here.',
+        link: 'https://github.com/Abs1nthe7',
+        linkText: 'View profile'
+    },
+    {
+        title: 'Internship Notes',
+        tag: 'Tencent / Game Development',
+        description: 'Notes about workflows, tooling, and development experience from my project internship, mainly around UGS, P4, UnLua, and game project debugging.',
+        link: '/en/archives/?category=Internship',
+        linkText: 'View archive'
+    },
+    {
+        title: 'Algorithm Notes',
+        tag: 'C++ / ACM',
+        description: 'Training notes, problem solutions, and contest reviews, organized into a knowledge base that I can revisit later.',
+        link: '/en/archives/?category=Algorithm',
+        linkText: 'View archive'
+    },
+    {
+        title: 'Game Development',
+        tag: 'UE / Gameplay',
+        description: 'Continuous learning around game development, including UE demos, gameplay systems, engineering practice, and personal project ideas.',
+        link: '/en/archives/?category=Game%20Development',
+        linkText: 'View archive'
+    }
+] : [
+    {
+        title: '个人博客',
+        tag: 'Astro / Momo',
+        description: '基于 Astro 与 Momo 模板定制的个人站点，用来记录算法竞赛、游戏开发学习和阶段性随笔。',
+        link: '/',
+        linkText: '访问站点'
+    },
+    {
+        title: 'GitHub',
+        tag: 'Code / Open Source',
+        description: '我的 GitHub 主页，之后会把练习项目、博客源码和一些可以公开的代码慢慢整理到这里。',
+        link: 'https://github.com/Abs1nthe7',
+        linkText: '查看主页'
+    },
+    {
+        title: '实习记录',
+        tag: '腾讯 / 游戏开发',
+        description: '记录项目实习中的工作流、工具链和开发经验，目前主要围绕 UGS、P4、UnLua 与游戏项目问题排查。',
+        link: '/archives/?category=实习记录',
+        linkText: '查看归档'
+    },
+    {
+        title: '算法竞赛笔记',
+        tag: 'C++ / ACM',
+        description: '整理训练、题解和比赛复盘，把零散的解法沉淀成之后还能回看的知识库。',
+        link: '/archives/?category=算法竞赛',
+        linkText: '查看归档'
+    },
+    {
+        title: '游戏开发学习',
+        tag: 'UE / Gameplay',
+        description: '面向游戏开发方向持续学习，包括 UE Demo、Gameplay 能力、工程实践和个人项目想法。',
+        link: '/archives/?category=游戏开发',
+        linkText: '查看归档'
+    }
+];
 ---
 
 <MainPageLayout title={pageTitle} lang={currentLang}>
     <div class="mx-auto w-full max-w-[var(--page-width)]">
         <Cover title={t("cover.title.friends")} subTitle={t("cover.subTitle.friends")} />
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-[var(--text-color)] mb-12">
-            {
-                friendLinkConfig.map((friend) => (
-                    <a 
-                        href={friend.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        class="group flex items-center justify-between p-4 border border-[var(--button-border-color)] rounded-lg shadow-sm active:bg-[var(--button-hover-color)] hover:bg-[var(--button-hover-color)] transition-all duration-300"
-                    >
-                        <div class="flex items-center min-w-0">
-                            <img 
-                                src={friend.avatar} 
-                                alt={friend.name} 
-                                class="w-16 h-16 rounded-full object-cover mr-4 flex-shrink-0"
-                                onerror="this.src='https://www.gravatar.com/avatar/?d=mp'"
-                            />
-                            <div class="min-w-0">
-                                <h2 class="font-bold text-lg truncate transition-colors duration-300 group-hover:text-[var(--link-color)]">{friend.name}</h2>
-                                <p class="text-[var(--text-color-70)] text-sm truncate">{friend.description}</p>
-                            </div>
+
+        <section class="mb-10 text-[var(--text-color)]">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-[var(--button-border-color)] pb-6">
+                <div>
+                    <p class="text-sm text-[var(--text-color-70)] mb-2">{profileConfig.name}</p>
+                    <h2 class="text-2xl font-bold">{t("header.friends")}</h2>
+                </div>
+                <p class="max-w-xl text-sm leading-7 text-[var(--text-color-70)]">{portfolioIntro}</p>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-5 text-[var(--text-color)] mb-12">
+            {portfolioItems.map((item) => (
+                <a
+                    href={item.link}
+                    class="group block rounded-lg border border-[var(--button-border-color)] p-5 transition-all duration-300 hover:bg-[var(--button-hover-color)]"
+                    target={item.link.startsWith('http') ? '_blank' : undefined}
+                    rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                >
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="min-w-0">
+                            <p class="text-xs text-[var(--link-color)] mb-2">{item.tag}</p>
+                            <h3 class="text-lg font-bold transition-colors duration-300 group-hover:text-[var(--link-color)]">{item.title}</h3>
                         </div>
-                        
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
-                            stroke-width="2" 
-                            stroke="currentColor" 
-                            class="w-5 h-5 text-[var(--link-color)] opacity-0 transform translate-x-[-10px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ml-2 flex-shrink-0"
-                        >
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </a>
-                ))
-            }
-        </div>
+                        <span class="shrink-0 text-sm text-[var(--text-color-70)] transition-colors duration-300 group-hover:text-[var(--link-color)]">
+                            {item.linkText}
+                        </span>
+                    </div>
+                    <p class="mt-4 text-sm leading-7 text-[var(--text-color-70)]">{item.description}</p>
+                </a>
+            ))}
+        </section>
+
         <Markdown class="mb-6 markdown-content onload-animation">
             <Content />
         </Markdown>

@@ -15,7 +15,6 @@
   export let replyingToId: number | null = null;
   export let author: string = '';
   export let email: string = '';
-  export let url: string = '';
   export let language: string = 'zh-cn';
   export let bloggerBadgeEnabled: boolean = false;
   export let bloggerBadgeText: string = '博主';
@@ -51,7 +50,6 @@
 
   let replyAuthor = '';
   let replyEmail = '';
-  let replyUrl = '';
   let replyContent = '';
   let replyAdminKey = '';
   
@@ -217,7 +215,6 @@
         dispatch('reply', c.id);
         replyAuthor = author;
         replyEmail = email;
-        replyUrl = url;
       }} class="hover:text-[var(--link-color)]">
         {t('comments.reply')}
       </button>
@@ -245,7 +242,6 @@
             parentId: c.id,
             author: replyAuthor,
             email: replyEmail,
-            url: replyUrl,
             content: replyContent,
             post_url: window.location.href,
             admin_key: replyAdminKey || undefined,
@@ -253,23 +249,17 @@
           replyContent = '';
           replyAdminKey = '';
         }} class="space-y-3">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div>
               <label for="reply-author-{c.id}" class="block text-xs text-[var(--text-color)] mb-1">{t('comments.name')}<span class="text-red-500">*</span></label>
               <input id="reply-author-{c.id}" type="text" placeholder={t('comments.required')} bind:value={replyAuthor}
-                on:input={() => dispatch('userInfoChange', { author: replyAuthor, email: replyEmail, url: replyUrl })}
+                on:input={() => dispatch('userInfoChange', { author: replyAuthor, email: replyEmail })}
                 class="rounded w-full text-[var(--text-color)] border border-[var(--button-border-color)] focus:outline-none focus:border-[var(--link-color)] text-sm py-1 px-2" />
             </div>
             <div>
               <label for="reply-email-{c.id}" class="block text-xs text-[var(--text-color)] mb-1">{t('comments.email')}<span class="text-red-500">*</span></label>
               <input id="reply-email-{c.id}" type="email" placeholder={t('comments.required')} bind:value={replyEmail}
-                on:input={() => dispatch('userInfoChange', { author: replyAuthor, email: replyEmail, url: replyUrl })}
-                class="rounded w-full text-[var(--text-color)] border border-[var(--button-border-color)] focus:outline-none focus:border-[var(--link-color)] text-sm py-1 px-2" />
-            </div>
-            <div>
-              <label for="reply-url-{c.id}" class="block text-xs text-[var(--text-color)] mb-1">{t('comments.site')}</label>
-              <input id="reply-url-{c.id}" type="url" placeholder={t('comments.optional')} bind:value={replyUrl}
-                on:input={() => dispatch('userInfoChange', { author: replyAuthor, email: replyEmail, url: replyUrl })}
+                on:input={() => dispatch('userInfoChange', { author: replyAuthor, email: replyEmail })}
                 class="rounded w-full text-[var(--text-color)] border border-[var(--button-border-color)] focus:outline-none focus:border-[var(--link-color)] text-sm py-1 px-2" />
             </div>
           </div>
@@ -339,7 +329,6 @@
               {postSlug} 
               {author} 
               {email} 
-              {url} 
               {language} 
               {bloggerBadgeEnabled}
               {bloggerBadgeText}
@@ -365,7 +354,6 @@
               {postSlug} 
               {author} 
               {email} 
-              {url} 
               {language}
               {bloggerBadgeEnabled}
               {bloggerBadgeText}

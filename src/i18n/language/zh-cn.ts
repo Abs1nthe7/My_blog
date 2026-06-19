@@ -5,20 +5,20 @@ const translation: Translation = {
         home: "首页",
         archive: "归档",
         about: "关于",
-        friends: "友链",
+        friends: "作品集",
     },
     cover: {
         title: {
             home: "像樱花落下那样，安静地留下痕迹",
             archive: "文章归档",
             about: "关于",
-            friends: "友链",
+            friends: "作品集",
         },
         subTitle: {
             home: "把短暂的相逢、沉默和回忆，都留给时间记住",
             archive: "共 {count} 篇文章",
             about: "一些关于自己和这个站点的话",
-            friends: "相关链接",
+            friends: "项目、文章和学习记录",
         }
     },
     toc: "目录",

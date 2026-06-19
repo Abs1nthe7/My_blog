@@ -28,7 +28,6 @@
   let placeholderName = '';
   let placeholderEmail = '';
   let placeholderContent = '';
-  let placeholderUrl = '';
   let adminCommentKeyConfigured = false;
   let adminEmailHash = '';
   let adminKey = '';
@@ -42,7 +41,6 @@
   // 顶层评论表单数据
   let author = '';
   let email = '';
-  let url = '';
   let content = '';
 
   // 防止重复提交
@@ -83,7 +81,6 @@
         const userInfo = JSON.parse(stored);
         author = userInfo.author || '';
         email = userInfo.email || '';
-        url = userInfo.url || '';
       }
     } catch (e) {
       console.warn('Failed to load user info from localStorage:', e);
@@ -93,7 +90,7 @@
   // 保存用户信息到本地存储
   function saveUserInfoToStorage() {
     try {
-      const userInfo = { author, email, url };
+      const userInfo = { author, email };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userInfo));
     } catch (e) {
       console.warn('Failed to save user info to localStorage:', e);
@@ -102,7 +99,7 @@
 
   // Auto-save user info and content draft on every change
   $: if (loaded) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ author, email, url }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ author, email }));
     if (content) {
       localStorage.setItem(STORAGE_KEY_DRAFT, content);
     } else {
@@ -158,7 +155,6 @@
       placeholderName = data.data.placeholder_name || '';
       placeholderEmail = data.data.placeholder_email || '';
       placeholderContent = data.data.placeholder_content || '';
-      placeholderUrl = data.data.placeholder_url || '';
       adminCommentKeyConfigured = data.data.admin_comment_key_configured === 'true';
       adminEmailHash = data.data.admin_email_hash || '';
       if (!adminCommentKeyConfigured) adminKey = '';
@@ -174,20 +170,18 @@
     // 防止重复提交
     if (submitting) return;
     
-    let submitAuthor, submitEmail, submitUrl, submitContent, submitAdminKey;
+    let submitAuthor, submitEmail, submitContent, submitAdminKey;
     
     if (replyData) {
       // 处理回复评论
       submitAuthor = replyData.author;
       submitEmail = replyData.email;
-      submitUrl = replyData.url;
       submitContent = replyData.content;
       submitAdminKey = replyData.admin_key;
     } else {
       // 处理顶层评论
       submitAuthor = author;
       submitEmail = email;
-      submitUrl = url;
       submitContent = content;
       submitAdminKey = adminKey;
     }
@@ -216,7 +210,7 @@
           post_slug: postSlug,
           author: submitAuthor,
           email: submitEmail,
-          url: submitUrl || null,
+          url: null,
           content: submitContent,
           parent_id: parentId,
           post_url: window.location.href, // 添加当前页面的URL
@@ -272,7 +266,7 @@
   <!-- 评论输入 -->
   <div data-aos="fade-up" class="mt-4">
     <form on:submit|preventDefault={() => submitComment()} class="space-y-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div class="">
           <label for="author" class="block text-sm text-[var(--text-color)] mb-1">{t('comments.name')}<span class="text-red-500">*</span></label>
           <input id="author" type="text" placeholder={placeholderName || t('comments.required')} bind:value={author}
@@ -283,12 +277,6 @@
           <input id="email" type="email" placeholder={placeholderEmail || t('comments.required')} bind:value={email}
             class="rounded w-full text-[var(--text-color)] border border-[var(--button-border-color)]  focus:outline-none focus:border-[var(--link-color)] text-sm p-2" />
         </div>
-        <div class="">
-          <label for="url" class="block text-sm text-[var(--text-color)] mb-1">{t('comments.site')}</label>
-          <input id="url" type="url" placeholder={placeholderUrl || t('comments.optional')} bind:value={url}
-            class="rounded w-full text-[var(--text-color)] border border-[var(--button-border-color)]  focus:outline-none focus:border-[var(--link-color)] text-sm p-2" />
-        </div>
-
         {#if adminCommentKeyConfigured && isAdminEmail}
           <div>
             <label for="admin-key" class="block text-sm text-[var(--text-color)] mb-1">管理员验证密钥<span class="text-red-500">*</span></label>
@@ -352,7 +340,7 @@
       <div class="space-y-6">
         {#each comments as c}
           <div in:fly={{ y: 24, duration: 400, opacity: 0 }}>
-            <CommentItem {c} {postSlug} {author} {email} {url} {language}
+            <CommentItem {c} {postSlug} {author} {email} {language}
               {bloggerBadgeEnabled} {bloggerBadgeText}
               {adminCommentKeyConfigured} {adminEmailHash}
               on:reply={(e) => setReplyingTo(e.detail)} 
@@ -365,7 +353,6 @@
               on:userInfoChange={(e) => {
                 author = e.detail.author;
                 email = e.detail.email;
-                url = e.detail.url;
               }} />
           </div>
         {/each}

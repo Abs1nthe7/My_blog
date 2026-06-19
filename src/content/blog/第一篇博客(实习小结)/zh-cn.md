@@ -3,7 +3,7 @@ title: 实习第一个月小结
 pubDate: 2026-05-31
 description: 记录一下最近这段时间的实习经历、感受，以及一些零散的思考。
 slugId: first-blog-internship-summary
-category: 随笔
+category: 实习记录
 pinTop: 0
 ---
 

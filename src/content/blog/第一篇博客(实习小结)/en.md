@@ -3,7 +3,7 @@ title: A Summary of My First Month as an Intern
 pubDate: 2026-05-31
 description: A brief record of my internship experience, feelings, and some scattered thoughts from this past month.
 slugId: first-blog-internship-summary
-category: Essay
+category: Internship
 pinTop: 0
 ---
 

@@ -5,20 +5,20 @@ const translation: Translation = {
         home: "Home",
         archive: "Archive",
         about: "About",
-        friends: "Links",
+        friends: "Portfolio",
     },
     cover: {
         title: {
             home: "Like cherry blossoms falling, leaving traces in silence",
             archive: "Archive",
             about: "About",
-            friends: "Links",
+            friends: "Portfolio",
         },
         subTitle: {
             home: "Let brief meetings, silence, and memories be kept by time",
             archive: "Total of {count} articles",
             about: "A few words about me and this site",
-            friends: "Related links",
+            friends: "Projects, posts, and learning notes",
         }
     },
     toc: "Contents",
